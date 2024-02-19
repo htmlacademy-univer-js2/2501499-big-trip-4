@@ -1,9 +1,9 @@
-import SortView from "../view/sort-view";
-import EventListView from "../view/event-list-view";
-import PointView from "../view/point-view";
-import PointEditView from "../view/point-edit-view";
+import SortView from '../view/sort-view';
+import EventListView from '../view/event-list-view';
+import PointView from '../view/point-view';
+import PointEditView from '../view/point-edit-view';
 
-import { render } from "../render";
+import { render } from '../render';
 
 export default class BoardPresenter {
   sortView = new SortView();
