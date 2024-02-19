@@ -8,7 +8,7 @@ const headerElement = bodyElement.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const mainElement = bodyElement.querySelector('.page-main');
-const  eventListElement = mainElement.querySelector('.trip-events');
+const eventListElement = mainElement.querySelector('.trip-events');
 
 const boardPresenter = new BoardPresenter({
   container: eventListElement
