@@ -22,7 +22,6 @@ const boardPresenter = new BoardPresenter({
   destinationsModel,
   offersModel,
   pointsModel
-});
 
 render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 render(new FilterView(), filterElement);
