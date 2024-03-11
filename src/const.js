@@ -35,7 +35,7 @@ const Duration = {
   HOUR: 5,
   DAY: 5,
   MINUTE: 59
-}
+};
 
 const TYPES = [
   'taxi',
@@ -67,4 +67,4 @@ const POINT_COUNT = 5;
 
 export {
   CITIES, OFFERS, DESCRIPTION, PRICE, Duration, TYPES, DEFAULT_TYPE, POINT_EMPTY, OFFER_COUNT, DESTINATION_COUNT, POINT_COUNT
-}
+};

@@ -1,7 +1,7 @@
-import { OFFER_COUNT, PRICE, TYPES } from "../const";
-import { getDate, getRandomInteger, getRandomValue } from "../utils";
-import { generateDestination } from "./destination";
-import { generateOffer } from "./offer";
+import { OFFER_COUNT, PRICE, TYPES } from '../const';
+import { getDate, getRandomInteger, getRandomValue } from '../utils';
+import { generateDestination } from './destination';
+import { generateOffer } from './offer';
 
 function generatePoint() {
   return {
