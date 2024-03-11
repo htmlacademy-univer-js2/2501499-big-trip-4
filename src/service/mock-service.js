@@ -1,8 +1,8 @@
-import { DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, TYPES } from "../const";
-import { generateDestination } from "../mock/destination";
-import { generateOffer } from "../mock/offer";
-import { generatePoint } from "../mock/point";
-import { getRandomInteger, getRandomValue } from "../utils";
+import { DESTINATION_COUNT, OFFER_COUNT, POINT_COUNT, TYPES } from '../const';
+import { generateDestination } from '../mock/destination';
+import { generateOffer } from '../mock/offer';
+import { generatePoint } from '../mock/point';
+import { getRandomInteger, getRandomValue } from '../utils';
 
 export default class MockService {
   destinations = [];

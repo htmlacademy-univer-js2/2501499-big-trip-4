@@ -1,4 +1,4 @@
-import { getRandomValue } from "../utils";
+import { getRandomValue } from '../utils';
 
 export default class OffersModel {
   constructor(service) {

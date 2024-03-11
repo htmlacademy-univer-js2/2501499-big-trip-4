@@ -61,7 +61,7 @@ function getPointDuration(point) {
   return pointDuration;
 }
 
-let date = dayjs().subtract(getRandomInteger(0, Duration.DAY), 'day').toDate();
+let dateToGet = dayjs().subtract(getRandomInteger(0, Duration.DAY), 'day').toDate();
 
 function getDate({ next }) {
   const minsGap = getRandomInteger(0, Duration.MINUTE);
@@ -69,7 +69,7 @@ function getDate({ next }) {
   const daysGap = getRandomInteger(0, Duration.DAY);
 
   if (next) {
-    date = dayjs(date)
+    date = dayjs(dateToGet)
       .add(minsGap, 'minute')
       .add(hoursGap, 'hour')
       .add(daysGap, 'day')
