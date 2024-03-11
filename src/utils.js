@@ -37,10 +37,6 @@ function formatStringToTime(date) {
   return dayjs(date).format('HH:mm');
 }
 
-function getSheduleDate(date) {
-  return dayjs(date).format('DD/MM/YY HH:mm');
-}
-
 function getPointDuration(point) {
   const timeDiff = dayjs(point.dateTo).diff(dayjs(point.dateFrom));
 
@@ -69,14 +65,14 @@ function getDate({ next }) {
   const daysGap = getRandomInteger(0, Duration.DAY);
 
   if (next) {
-    date = dayjs(dateToGet)
+    dateToGet = dayjs(dateToGet)
       .add(minsGap, 'minute')
       .add(hoursGap, 'hour')
       .add(daysGap, 'day')
       .toDate();
   }
 
-  return date;
+  return dateToGet;
 }
 
 export {
