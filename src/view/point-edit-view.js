@@ -1,4 +1,4 @@
-import { CITIES, TYPES } from '../const.js';
+import { CITIES, POINT_EMPTY, TYPES } from '../const.js';
 import { createElement } from '../render.js';
 import { formatStringToDateTime } from '../utils.js';
 

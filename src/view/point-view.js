@@ -1,6 +1,6 @@
 import { CITIES } from '../const.js';
 import { createElement } from '../render.js';
-import { formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, getRandomValue } from '../utils.js';
+import { formatStringToDateTime, formatStringToShortDate, getPointDuration, getRandomValue } from '../utils.js';
 
 function createPointOffersTemplate(offers) {
   return (
@@ -15,7 +15,7 @@ function createPointOffersTemplate(offers) {
 }
 
 function createPointTemplate(point) {
-  const { basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = point;
+  const { basePrice, dateFrom, dateTo, isFavorite, offers, type } = point;
   const favoriteClass = isFavorite ? 'event__favorite-btn--active' : '';
   return `<li class="trip-events__item">
   <div class="event">
