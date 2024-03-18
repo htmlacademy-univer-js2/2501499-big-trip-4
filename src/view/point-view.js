@@ -1,6 +1,6 @@
 import { CITIES } from '../const.js';
 import { createElement } from '../render.js';
-import { formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, getRandomValue } from '../utils.js';
+import { formatStringToDateTime, formatStringToShortDate, getPointDuration, getRandomValue } from '../utils.js';
 
 function createPointOffersTemplate(offers) {
   return (
