@@ -39,7 +39,7 @@ function createPointOffersTemplate (pointOffers) {
                     <span class="event__offer-price">${offer.price}</span>
                 </label>
             </div>`);
-          }).join('');
+  }).join('');
 
   return `<div class="event__available-offers">${offerItems}</div>`;
 }
