@@ -46,7 +46,6 @@ export default class MockService {
   #generatePoints() {
     return Array.from({length: POINT_COUNT}, () => {
       const type = getRandomValue(TYPES);
-      const destination = getRandomValue(this.#destinations);
 
       const hasOffers = getRandomInteger(0, 1);
       const offersByType = this.#offers.find((offerByType) => offerByType.type === type);

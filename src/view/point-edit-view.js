@@ -31,14 +31,15 @@ function createPointOffersTemplate (pointOffers) {
   const offerItems = pointOffers.pointOffers.offers.map((offer) => {
     const offerName = offer.title.replace(' ', '').toLowerCase();
 
-    return `<div class="event__offer-selector">
+    return (`<div class="event__offer-selector">
                 <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offerName}-1" type="checkbox" name="event-offer-${offerName}" checked>
                 <label class="event__offer-label" for="event-offer-${offerName}-1">
                     <span class="event__offer-title">${offer.title}</span>
                     &plus;&euro;&nbsp;
                     <span class="event__offer-price">${offer.price}</span>
                 </label>
-            </div>`}).join('');
+            </div>`);
+          }).join('');
 
   return `<div class="event__available-offers">${offerItems}</div>`;
 }

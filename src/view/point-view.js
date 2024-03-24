@@ -1,6 +1,5 @@
-import { CITIES } from '../const.js';
 import AbstractView from '../framework/view/abstract-view.js';
-import { formatStringToDateTime, formatStringToShortDate, getPointDuration, getRandomValue } from '../utils.js';
+import { formatStringToDateTime, formatStringToShortDate, getPointDuration } from '../utils.js';
 
 function createPointOffersTemplate(offer) {
   return (
@@ -68,7 +67,7 @@ export default class PointView extends AbstractView {
     this.#offer = offer;
     this.#onRollUpClick = onROllUpClick;
 
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpClickHandler)
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpClickHandler);
   }
 
   get template() {
