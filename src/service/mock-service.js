@@ -56,8 +56,8 @@ export default class MockService {
           .slice(0, getRandomInteger(0, OFFER_COUNT))
           .map((offer) => offer.id)
         : [];
-      console.log(destination.id);
-      return generatePoint();
+
+      return generatePoint(offerIds);
     });
   }
 }

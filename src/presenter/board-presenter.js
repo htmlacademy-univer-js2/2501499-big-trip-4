@@ -88,6 +88,6 @@ export default class BoardPresenter {
       document.removeEventListener('keydown', onFormKeyDown);
     }
 
-    render(pointComponent, this.#eventListView.element)
+    render(pointComponent, this.#eventListView.element);
   };
 }

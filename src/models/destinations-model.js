@@ -14,10 +14,7 @@ export default class DestinationsModel {
   }
 
   getById(id) {
-    console.log(id);
-    const destination = this.#destinations.find((destination) => destination.id === id);
-    console.log(this.#destinations.find((destination) => destination.id === id));
-    return destination;
+    return this.#destinations.find((destination) => destination.id === id);
   }
 
   getRandomDestination() {

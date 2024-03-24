@@ -14,9 +14,7 @@ export default class OffersModel {
   }
 
   getByType(type) {
-    const offer = this.#offers.find((offer) => offer.type === type);
-    console.log(offer);
-    return offer;
+    return this.#offers.find((offer) => offer.type === type);
   }
 
   getRandomOffer() {
