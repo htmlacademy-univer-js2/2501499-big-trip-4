@@ -75,6 +75,8 @@ function getDate({ next }) {
   return dateToGet;
 }
 
+const isEscape = (event) => event.key === 'Escape';
+
 export {
-  getRandomInteger, getRandomValue, formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, getDate
+  getRandomInteger, getRandomValue, formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, getDate, isEscape
 };
