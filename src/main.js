@@ -1,11 +1,11 @@
 import TripInfoView from './view/trip-info-view.js';
 import FilterView from './view/filter-view.js';
-import { render, RenderPosition } from './render.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import MockService from './service/mock-service.js';
 import DestinationsModel from './models/destinations-model.js';
 import OffersModel from './models/offers-model.js';
 import PointsModel from './models/points-model.js';
+import { RenderPosition, render } from './framework/render.js';
 
 const tripInfoElement = document.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
