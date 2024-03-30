@@ -1,5 +1,4 @@
 import TripInfoView from './view/trip-info-view.js';
-import FilterView from './view/filter-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import MockService from './service/mock-service.js';
 import DestinationsModel from './models/destinations-model.js';
@@ -25,7 +24,7 @@ const boardPresenter = new BoardPresenter({
   pointsModel
 });
 
-const filterPresenter = new FilterPresenter({container: filterElement, pointsModel})
+const filterPresenter = new FilterPresenter({container: filterElement, pointsModel});
 
 render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 

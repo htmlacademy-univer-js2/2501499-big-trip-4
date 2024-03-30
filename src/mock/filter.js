@@ -6,13 +6,13 @@ const filter = {
   [FilterTypes.FUTURE]: (points) => points.filter((point) => isPointFuture(point)),
   [FilterTypes.PRESENT]: (points) => points.filter((point) => isPointPresent(point)),
   [FilterTypes.PAST]: (points) => points.filter((point) => isPointPast(point))
-}
+};
 
 function generateFilters(points) {
   return Object.entries(filter).map(([filterType, filterPoints]) => ({
     type: filterType,
     hasPoints: filterPoints(points).length > 0,
-    defaultSelected: filterType == FilterTypes.EVERYTHING
+    defaultSelected: filterType === FilterTypes.EVERYTHING
   }));
 }
 
