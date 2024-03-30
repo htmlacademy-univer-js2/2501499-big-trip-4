@@ -1,4 +1,4 @@
-import { OFFERS, PRICE } from '../const';
+import { OFFERS, Price } from '../const';
 import { getRandomInteger, getRandomValue } from '../utils';
 
 function generateOffer() {
@@ -7,7 +7,7 @@ function generateOffer() {
   return {
     id: crypto.randomUUID(),
     title: offer,
-    price: getRandomInteger(PRICE.MIN, (PRICE.MAX / 10))
+    price: getRandomInteger(Price.MIN, (Price.MAX / 10))
   };
 }
 
