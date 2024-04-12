@@ -77,6 +77,28 @@ function getDate({ next }) {
 
 const isEscape = (event) => event.key === 'Escape';
 
+function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+function isPointPresent(point) {
+  return dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
+}
+
+function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
 export {
-  getRandomInteger, getRandomValue, formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, getDate, isEscape
+  getRandomInteger,
+  getRandomValue,
+  formatStringToDateTime,
+  formatStringToShortDate,
+  formatStringToTime,
+  getPointDuration,
+  getDate,
+  isEscape,
+  isPointFuture,
+  isPointPresent,
+  isPointPast
 };

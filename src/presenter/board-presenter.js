@@ -4,6 +4,7 @@ import PointView from '../view/point-view';
 import PointEditView from '../view/point-edit-view';
 import { render, replace } from '../framework/render';
 import { isEscape } from '../utils';
+import EmptyListView from '../view/empty-list-view';
 
 
 export default class BoardPresenter {
@@ -27,6 +28,11 @@ export default class BoardPresenter {
   init() {
     this.#points = [...this.#pointsModel.points];
 
+    if (this.#points.length === 0) {
+      render(new EmptyListView(), this.#container);
+      return;
+    }
+
     render(this.#sortView, this.#container);
     render(this.#eventListView, this.#container);
 
@@ -42,7 +48,6 @@ export default class BoardPresenter {
       offer,
       onROllUpClick: pointRollUpClickHandler
     });
-
 
     const pointEditComponent = new PointEditView({
       point: point,

@@ -1,4 +1,4 @@
-import { CITIES, POINT_EMPTY, TYPES } from '../const.js';
+import { CITIES, PointEmpty, TYPES } from '../const.js';
 import AbstractView from '../framework/view/abstract-view.js';
 import { formatStringToDateTime } from '../utils.js';
 
@@ -141,7 +141,7 @@ export default class PointEditView extends AbstractView {
     this.#onDeleteClick();
   };
 
-  constructor({point = POINT_EMPTY, pointDestination, pointOffers, onRollUpClick, onSubmitForm, onDeleteClick}) {
+  constructor({point = PointEmpty, pointDestination, pointOffers, onRollUpClick, onSubmitForm, onDeleteClick}) {
     super();
     this.#point = point;
     this.#pointDestination = pointDestination;
