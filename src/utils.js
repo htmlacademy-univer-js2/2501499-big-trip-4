@@ -26,7 +26,7 @@ function getRandomValue(items) {
 }
 
 function formatStringToDateTime(date) {
-  return dayjs(date).format('YYYY-MM-DDTHH:mm');
+  return dayjs(date).format('YY/MM/DD HH:mm');
 }
 
 function formatStringToShortDate(date) {
@@ -75,8 +75,6 @@ function getDate({ next }) {
   return dateToGet;
 }
 
-const isEscape = (event) => event.key === 'Escape';
-
 function isPointFuture(point) {
   return dayjs().isBefore(point.dateFrom);
 }
@@ -89,6 +87,10 @@ function isPointPast(point) {
   return dayjs().isAfter(point.dateTo);
 }
 
+function updatePoint(points, update) {
+  return points.map((point) => point.id === update.id ? update : point);
+}
+
 export {
   getRandomInteger,
   getRandomValue,
@@ -97,8 +99,8 @@ export {
   formatStringToTime,
   getPointDuration,
   getDate,
-  isEscape,
   isPointFuture,
   isPointPresent,
-  isPointPast
+  isPointPast,
+  updatePoint
 };
