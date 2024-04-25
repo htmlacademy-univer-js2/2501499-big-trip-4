@@ -1,24 +1,23 @@
 import SortView from '../view/sort-view';
 import EventListView from '../view/event-list-view';
-import PointView from '../view/point-view';
-import PointEditView from '../view/point-edit-view';
-import { render, replace } from '../framework/render';
-import { isEscape } from '../utils';
+import { render } from '../framework/render';
 import EmptyListView from '../view/empty-list-view';
+import PointPresenter from './point-presenter';
+import { updatePoint } from '../utils';
 
 
 export default class BoardPresenter {
   #sortView = new SortView();
 
   #container = null;
-  #destinationsModel = null;
   #offersModel = null;
   #pointsModel = null;
   #points = [];
 
-  constructor({container, destinationsModel, offersModel, pointsModel}) {
+  #pointPresenters = new Map();
+
+  constructor({container, offersModel, pointsModel}) {
     this.#container = container;
-    this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
   }
@@ -37,62 +36,28 @@ export default class BoardPresenter {
     render(this.#eventListView, this.#container);
 
     this.#points.forEach((point) => {
-      const offer = this.#offersModel.getByType(point.type);
-      this.#renderPoint(point, offer);
+      this.#renderPoint(point);
     });
   }
 
-  #renderPoint = (point, offer) => {
-    const pointComponent = new PointView({
-      point,
-      offer,
-      onROllUpClick: pointRollUpClickHandler
+  #renderPoint = (point) => {
+    const pointPresenter = new PointPresenter({
+      container: this.#eventListView.element,
+      offersModel: this.#offersModel,
+      pointsModel: this.#pointsModel,
+      onDataChange: this.#onPointDataChange,
+      onModeChange: this.#onModeChange
     });
+    pointPresenter.init(point);
+    this.#pointPresenters.set(point.id, pointPresenter);
+  };
 
-    const pointEditComponent = new PointEditView({
-      point: point,
-      pointDestination: point.destination,
-      pointOffers: offer,
-      onRollUpClick: formRollUpClickHandler,
-      onSubmitForm: submitFormHandler,
-      onDeleteClick: deleteClickHandler
-    });
+  #onPointDataChange = (updatedPoint, offer) => {
+    this.#points = updatePoint(this.#points, updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint, offer);
+  };
 
-    function replacePointToForm() {
-      replace(pointEditComponent, pointComponent);
-    }
-
-    function replaceFormToPoint() {
-      replace(pointComponent, pointEditComponent);
-    }
-
-    function onFormKeyDown(event) {
-      if (isEscape(event)) {
-        event.preventDefault();
-        replaceFormToPoint();
-      }
-    }
-
-    function pointRollUpClickHandler() {
-      replacePointToForm();
-      document.addEventListener('keydown', onFormKeyDown);
-    }
-
-    function formRollUpClickHandler() {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', onFormKeyDown);
-    }
-
-    function submitFormHandler() {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', onFormKeyDown);
-    }
-
-    function deleteClickHandler() {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', onFormKeyDown);
-    }
-
-    render(pointComponent, this.#eventListView.element);
+  #onModeChange = () => {
+    this.#pointPresenters.forEach((pointPresenter) => pointPresenter.reset());
   };
 }

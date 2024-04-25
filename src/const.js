@@ -80,11 +80,16 @@ const SortTypes = {
   OFFERS: 'offers'
 };
 
-const SORTING_ITEMS = [
+const PointMode = {
+  DEFAULT: 'default',
+  EDIT: 'edit'
+};
+
+const SORTING = [
   {
     type: SortTypes.DAY,
     active: true,
-    defaultSelected: true
+    defaultType: true
   },
   {
     type: SortTypes.EVENT,
@@ -118,5 +123,6 @@ export {
   POINT_COUNT,
   FilterTypes,
   SortTypes,
-  SORTING_ITEMS
+  PointMode,
+  SORTING
 };

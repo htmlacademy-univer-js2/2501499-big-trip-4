@@ -23,12 +23,12 @@ function createPointTypesTemplate(currentType) {
   return TYPES.map((type) =>
     `<div class="event__type-item">
           <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}" ${currentType === type ? 'checked' : ''}>
-          <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type[0].toUpperCase() + type.slice(1)} ${currentType === type ? 'checked' : ''}</label>
+          <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1" ${currentType === type ? 'checked' : ''}>${type[0].toUpperCase() + type.slice(1)}</label>
       </div>`).join('');
 }
 
-function createPointOffersTemplate (pointOffers) {
-  const offerItems = pointOffers.pointOffers.offers.map((offer) => {
+function createPointOffersTemplate (offers) {
+  const offerItems = offers.map((offer) => {
     const offerName = offer.title.replace(' ', '').toLowerCase();
 
     return (`<div class="event__offer-selector">
@@ -44,8 +44,8 @@ function createPointOffersTemplate (pointOffers) {
   return `<div class="event__available-offers">${offerItems}</div>`;
 }
 
-function createPointEditTemplate({point, pointDestination, pointOffers}) {
-  const { basePrice, dateFrom, dateTo, type } = point;
+function createPointEditTemplate({point, pointDestination }) {
+  const { basePrice, dateFrom, dateTo, offers, type } = point;
 
   return (`
   <li class="trip-events__item">
@@ -102,7 +102,7 @@ function createPointEditTemplate({point, pointDestination, pointOffers}) {
         <section class="event__section  event__section--offers">
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
-          ${createPointOffersTemplate({ pointOffers })}
+          ${createPointOffersTemplate(offers)}
         </section>
 
         <section class="event__section  event__section--destination">
@@ -121,14 +121,33 @@ function createPointEditTemplate({point, pointDestination, pointOffers}) {
 export default class PointEditView extends AbstractView {
   #point = null;
   #pointDestination = null;
-  #pointOffers = null;
-  #onRollUpClick = null;
+  #onRollUpPointClick = null;
   #onSubmitForm = null;
   #onDeleteClick = null;
 
-  #rollUpClickHandler = (event) => {
+  constructor({point = PointEmpty, pointDestination, onRollUpPointClick, onSubmitForm, onDeleteClick}) {
+    super();
+    this.#point = point;
+    this.#pointDestination = pointDestination;
+    this.#onRollUpPointClick = onRollUpPointClick;
+    this.#onSubmitForm = onSubmitForm;
+    this.#onDeleteClick = onDeleteClick;
+
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpPointClickHandler);
+    this.element.querySelector('.event--edit').addEventListener('submit', this.#submitFormHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteClickHandler);
+  }
+
+  get template() {
+    return createPointEditTemplate({
+      point: this.#point,
+      pointDestination: this.#pointDestination,
+    });
+  }
+
+  #rollUpPointClickHandler = (event) => {
     event.preventDefault();
-    this.#onRollUpClick();
+    this.#onRollUpPointClick();
   };
 
   #submitFormHandler = (event) => {
@@ -140,26 +159,4 @@ export default class PointEditView extends AbstractView {
     event.preventDefault();
     this.#onDeleteClick();
   };
-
-  constructor({point = PointEmpty, pointDestination, pointOffers, onRollUpClick, onSubmitForm, onDeleteClick}) {
-    super();
-    this.#point = point;
-    this.#pointDestination = pointDestination;
-    this.#pointOffers = pointOffers;
-    this.#onRollUpClick = onRollUpClick;
-    this.#onSubmitForm = onSubmitForm;
-    this.#onDeleteClick = onDeleteClick;
-
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpClickHandler);
-    this.element.querySelector('.event--edit').addEventListener('submit', this.#submitFormHandler);
-    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteClickHandler);
-  }
-
-  get template() {
-    return createPointEditTemplate({
-      point: this.#point,
-      pointDestination: this.#pointDestination,
-      pointOffers: this.#pointOffers
-    });
-  }
 }
