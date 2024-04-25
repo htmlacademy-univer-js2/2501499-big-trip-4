@@ -1,4 +1,4 @@
-import { OFFER_COUNT, PRICE, TYPES } from '../const';
+import { OFFER_COUNT, Price, TYPES } from '../const';
 import { getDate, getRandomInteger, getRandomValue } from '../utils';
 import { generateDestination } from './destination';
 import { generateOffer } from './offer';
@@ -6,7 +6,7 @@ import { generateOffer } from './offer';
 function generatePoint() {
   return {
     id: crypto.randomUUID(),
-    basePrice: getRandomInteger(PRICE.MIN, PRICE.MAX),
+    basePrice: getRandomInteger(Price.MIN, Price.MAX),
     dateFrom: getDate({ next: false }),
     dateTo: getDate({ next: true }),
     destination: generateDestination(),

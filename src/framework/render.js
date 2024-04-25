@@ -35,7 +35,7 @@ function render(component, container, place = RenderPosition.BEFOREEND) {
     throw new Error('Container element doesn\'t exist');
   }
 
-  container?.insertAdjacentElement(place, component.element);
+  container.insertAdjacentElement(place, component.element);
 }
 
 /**
