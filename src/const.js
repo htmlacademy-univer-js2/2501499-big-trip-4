@@ -1,3 +1,5 @@
+import { sortPointsByDay, sortPointsByEvent, sortPointsByOffers, sortPointsByPrice, sortPointsByTime } from './utils';
+
 const CITIES = [
   'Chamonix',
   'Geneva',
@@ -80,41 +82,31 @@ const SortTypes = {
   OFFERS: 'offers'
 };
 
+const SortingOptions = {
+  [SortTypes.DAY]: (points) => [...points].sort(sortPointsByDay),
+  [SortTypes.EVENT]: (points) => [...points].sort(sortPointsByEvent),
+  [SortTypes.TIME]: (points) => [...points].sort(sortPointsByTime),
+  [SortTypes.PRICE]: (points) => [...points].sort(sortPointsByPrice),
+  [SortTypes.OFFERS]: (points) => [...points].sort(sortPointsByOffers)
+};
+
+const ACTIVE_SORT_TYPES = [
+  SortTypes.DAY,
+  SortTypes.TIME,
+  SortTypes.PRICE
+];
+
 const PointMode = {
   DEFAULT: 'default',
   EDIT: 'edit'
 };
 
-const SORTING = [
-  {
-    type: SortTypes.DAY,
-    active: true,
-    defaultType: true
-  },
-  {
-    type: SortTypes.EVENT,
-    active: false
-  },
-  {
-    type: SortTypes.TIME,
-    active: true
-  },
-  {
-    type: SortTypes.PRICE,
-    active: true
-  },
-  {
-    type: SortTypes.OFFERS,
-    active: false
-  }
-];
-
 export {
+  Duration,
   CITIES,
   OFFERS,
   DESCRIPTION,
   Price,
-  Duration,
   TYPES,
   DEFAULT_TYPE,
   PointEmpty,
@@ -123,6 +115,7 @@ export {
   POINT_COUNT,
   FilterTypes,
   SortTypes,
-  PointMode,
-  SORTING
+  SortingOptions,
+  ACTIVE_SORT_TYPES,
+  PointMode
 };

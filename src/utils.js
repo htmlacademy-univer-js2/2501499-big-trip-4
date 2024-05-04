@@ -1,7 +1,7 @@
+import { Duration } from './const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Duration } from './const';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -57,12 +57,11 @@ function getPointDuration(point) {
   return pointDuration;
 }
 
-let dateToGet = dayjs().subtract(getRandomInteger(0, Duration.DAY), 'day').toDate();
-
 function getDate({ next }) {
   const minsGap = getRandomInteger(0, Duration.MINUTE);
   const hoursGap = getRandomInteger(1, Duration.HOUR);
   const daysGap = getRandomInteger(0, Duration.DAY);
+  let dateToGet = dayjs().subtract(getRandomInteger(0, Duration.DAY), 'day').toDate();
 
   if (next) {
     dateToGet = dayjs(dateToGet)
@@ -91,6 +90,26 @@ function updatePoint(points, update) {
   return points.map((point) => point.id === update.id ? update : point);
 }
 
+function sortPointsByDay(firstPoint, secondPoint) {
+  return new Date(firstPoint.dateFrom) - new Date(secondPoint.dateFrom);
+}
+
+function sortPointsByTime(firstPoint, secondPoint) {
+  return dayjs(secondPoint.dateTo).diff(dayjs(secondPoint.dateFrom)) - dayjs(firstPoint.dateTo).diff(dayjs(secondPoint.dateFrom));
+}
+
+function sortPointsByPrice(firstPoint, secondPoint) {
+  return firstPoint.basePrice - secondPoint.basePrice;
+}
+
+function sortPointsByEvent(firstPoint, secondPoint) {
+  return (firstPoint.type.toLowerCase()).localeCompare(secondPoint.type.toLowerCase());
+}
+
+function sortPointsByOffers(firstPoint, secondPoint) {
+  return firstPoint.offers.length - secondPoint.offers.length;
+}
+
 export {
   getRandomInteger,
   getRandomValue,
@@ -102,5 +121,10 @@ export {
   isPointFuture,
   isPointPresent,
   isPointPast,
-  updatePoint
+  updatePoint,
+  sortPointsByDay,
+  sortPointsByTime,
+  sortPointsByPrice,
+  sortPointsByEvent,
+  sortPointsByOffers
 };

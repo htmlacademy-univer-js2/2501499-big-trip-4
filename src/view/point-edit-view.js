@@ -123,19 +123,19 @@ export default class PointEditView extends AbstractView {
   #pointDestination = null;
   #onRollUpPointClick = null;
   #onSubmitForm = null;
-  #onDeleteClick = null;
+  #onCancelFormClick = null;
 
-  constructor({point = PointEmpty, pointDestination, onRollUpPointClick, onSubmitForm, onDeleteClick}) {
+  constructor({point = PointEmpty, pointDestination, onRollUpPointClick, onSubmitForm, onCancelFormClick}) {
     super();
     this.#point = point;
     this.#pointDestination = pointDestination;
     this.#onRollUpPointClick = onRollUpPointClick;
     this.#onSubmitForm = onSubmitForm;
-    this.#onDeleteClick = onDeleteClick;
+    this.#onCancelFormClick = onCancelFormClick;
 
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollUpPointClickHandler);
     this.element.querySelector('.event--edit').addEventListener('submit', this.#submitFormHandler);
-    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#deleteClickHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#cancelClickHandler);
   }
 
   get template() {
@@ -155,8 +155,8 @@ export default class PointEditView extends AbstractView {
     this.#onSubmitForm();
   };
 
-  #deleteClickHandler = (event) => {
+  #cancelClickHandler = (event) => {
     event.preventDefault();
-    this.#onDeleteClick();
+    this.#onCancelFormClick();
   };
 }
