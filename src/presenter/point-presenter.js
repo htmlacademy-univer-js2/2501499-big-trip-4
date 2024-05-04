@@ -42,7 +42,7 @@ export default class PointPresenter {
       pointDestination: point.destination,
       onRollUpPointClick: this.#formRollUpClickHandler,
       onFormSubmit: this.#formSubmitHandler,
-      onDeleteClick: this.#deleteClickHandler
+      onCancelFormClick: this.#cancelClickHandler
     });
 
     if (previousPointComponent === null || previousPointEditComponent === null) {
@@ -106,7 +106,7 @@ export default class PointPresenter {
     document.removeEventListener('keydown', this.#onFormKeyDown);
   };
 
-  #deleteClickHandler = () => {
+  #cancelClickHandler = () => {
     this.#replaceFormToPoint();
     document.removeEventListener('keydown', this.#onFormKeyDown);
   };
