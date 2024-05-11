@@ -10,15 +10,14 @@ function createSortTemplate(sortTypes, currentSortType) {
     </form>`
   );
 }
-
 export default class SortView extends AbstractView {
-  sortTypes = null;
+  #sortTypes = null;
   #currentSortType = null;
   #onSortTypeChange = null;
 
   constructor({ sortTypes, currentSortType, onSortTypeChange }) {
     super();
-    this.sortTypes = sortTypes;
+    this.#sortTypes = sortTypes;
     this.#currentSortType = currentSortType;
     this.#onSortTypeChange = onSortTypeChange;
 
@@ -26,11 +25,7 @@ export default class SortView extends AbstractView {
   }
 
   get template() {
-    return createSortTemplate(this.sortTypes, this.#currentSortType);
-  }
-
-  get currentSortType() {
-    return this.#currentSortType;
+    return createSortTemplate(this.#sortTypes, this.#currentSortType);
   }
 
   #sortTypeChangeHandler = (event) => {

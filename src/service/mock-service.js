@@ -12,7 +12,7 @@ export default class MockService {
   constructor() {
     this.#destinations = this.#generateDestinations();
     this.#offers = this.#generateOffers();
-    this.#points = this.#generatePoints();
+    this.#points = this.#generatePoints(this.destinations);
   }
 
   get destinations() {
@@ -43,7 +43,7 @@ export default class MockService {
     }));
   }
 
-  #generatePoints() {
+  #generatePoints(destinations) {
     return Array.from({length: getRandomInteger(0, POINT_COUNT)}, () => {
       const type = getRandomValue(TYPES);
 
@@ -56,7 +56,7 @@ export default class MockService {
           .map((offer) => offer.id)
         : [];
 
-      return generatePoint(offerIds);
+      return generatePoint(destinations, offerIds);
     });
   }
 }
