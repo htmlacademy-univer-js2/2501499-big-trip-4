@@ -95,7 +95,7 @@ function sortPointsByDay(firstPoint, secondPoint) {
 }
 
 function sortPointsByTime(firstPoint, secondPoint) {
-  return dayjs(secondPoint.dateTo).diff(dayjs(secondPoint.dateFrom)) - dayjs(firstPoint.dateTo).diff(dayjs(secondPoint.dateFrom));
+  return dayjs(secondPoint.dateTo).diff(dayjs(secondPoint.dateFrom)) - dayjs(firstPoint.dateTo).diff(dayjs(firstPoint.dateFrom));
 }
 
 function sortPointsByPrice(firstPoint, secondPoint) {
