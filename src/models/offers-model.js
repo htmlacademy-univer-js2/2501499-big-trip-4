@@ -1,5 +1,3 @@
-import { getRandomValue } from '../utils';
-
 export default class OffersModel {
   #service = null;
   #offers = null;
@@ -15,9 +13,5 @@ export default class OffersModel {
 
   getByType(type) {
     return this.#offers.find((offer) => offer.type === type);
-  }
-
-  getRandomOffer() {
-    return getRandomValue(this.#offers);
   }
 }

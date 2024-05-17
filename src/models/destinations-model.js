@@ -1,5 +1,3 @@
-import { getRandomValue } from '../utils';
-
 export default class DestinationsModel {
   #service = null;
   #destinations = null;
@@ -15,9 +13,5 @@ export default class DestinationsModel {
 
   getById(id) {
     return this.#destinations.find((destination) => destination.id === id);
-  }
-
-  getRandomDestination() {
-    return getRandomValue(this.#destinations);
   }
 }

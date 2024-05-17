@@ -1,6 +1,7 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { template } = require("@babel/core");
 
 module.exports = {
   entry: './src/main.js',
@@ -29,8 +30,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: '/\.js$/',
-        exclude: '/(node_modules)/',
+        test: /\.js$/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -38,6 +39,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      }
     ]
   }
 }

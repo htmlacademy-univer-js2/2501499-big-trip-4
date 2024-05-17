@@ -39,24 +39,16 @@ export default class MockService {
       type,
       offers: Array.from({
         length:getRandomInteger(0, OFFER_COUNT)
-      }, () => generateOffer(type))
+      }, () => generateOffer())
     }));
   }
 
   #generatePoints(destinations) {
     return Array.from({length: getRandomInteger(0, POINT_COUNT)}, () => {
       const type = getRandomValue(TYPES);
-
-      const hasOffers = getRandomInteger(0, 1);
       const offersByType = this.#offers.find((offerByType) => offerByType.type === type);
 
-      const offerIds = (hasOffers)
-        ? offersByType.offers
-          .slice(0, getRandomInteger(0, OFFER_COUNT))
-          .map((offer) => offer.id)
-        : [];
-
-      return generatePoint(destinations, offerIds);
+      return generatePoint(destinations, offersByType);
     });
   }
 }
