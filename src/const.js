@@ -1,4 +1,4 @@
-import { sortPointsByDay, sortPointsByEvent, sortPointsByOffers, sortPointsByPrice, sortPointsByTime } from './utils';
+import { isPointFuture, isPointPast, isPointPresent, sortPointsByDay, sortPointsByEvent, sortPointsByOffers, sortPointsByPrice, sortPointsByTime } from './utils';
 
 const CITIES = [
   'Chamonix',
@@ -74,6 +74,13 @@ const FilterTypes = {
   PAST: 'past'
 };
 
+const FilterOptions = {
+  [FilterTypes.EVERYTHING]: (points) => [...points],
+  [FilterTypes.FUTURE]: (points) => points.filter((point) => isPointFuture(point)),
+  [FilterTypes.PRESENT]: (points) => points.filter((point) => isPointPresent(point)),
+  [FilterTypes.PAST]: (points) => points.filter((point) => isPointPast(point))
+};
+
 const SortTypes = {
   DAY: 'day',
   EVENT: 'event',
@@ -101,6 +108,25 @@ const PointMode = {
   EDIT: 'edit'
 };
 
+const UpdateType = {
+  PATCH: 'patch',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR'
+};
+
+const UserAction = {
+  UPDATE_POINT: 'update-point',
+  ADD_POINT: 'add-point',
+  DELETE_POINT: 'delete-point'
+};
+
+const EmptyListText = {
+  [FilterTypes.EVERYTHING]: 'Click New Event to create your first point',
+  [FilterTypes.FUTURE]: 'There are no future events',
+  [FilterTypes.PRESENT]: 'There are no present events',
+  [FilterTypes.PAST]: 'There are no past events'
+};
+
 export {
   Duration,
   CITIES,
@@ -114,8 +140,12 @@ export {
   DESTINATION_COUNT,
   POINT_COUNT,
   FilterTypes,
+  FilterOptions,
   SortTypes,
   SortingOptions,
   ACTIVE_SORT_TYPES,
-  PointMode
+  PointMode,
+  UpdateType,
+  UserAction,
+  EmptyListText
 };

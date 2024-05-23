@@ -99,7 +99,7 @@ function sortPointsByTime(firstPoint, secondPoint) {
 }
 
 function sortPointsByPrice(firstPoint, secondPoint) {
-  return firstPoint.basePrice - secondPoint.basePrice;
+  return secondPoint.basePrice - firstPoint.basePrice;
 }
 
 function sortPointsByEvent(firstPoint, secondPoint) {
@@ -108,6 +108,12 @@ function sortPointsByEvent(firstPoint, secondPoint) {
 
 function sortPointsByOffers(firstPoint, secondPoint) {
   return firstPoint.offers.length - secondPoint.offers.length;
+}
+
+function isBigDifference(firstPoint, secondPoint) {
+  return firstPoint.dateFrom !== secondPoint.dateFrom
+    || firstPoint.basePrice !== secondPoint.basePrice
+    || sortPointsByTime(firstPoint, secondPoint) !== 0;
 }
 
 export {
@@ -126,5 +132,6 @@ export {
   sortPointsByTime,
   sortPointsByPrice,
   sortPointsByEvent,
-  sortPointsByOffers
+  sortPointsByOffers,
+  isBigDifference
 };
