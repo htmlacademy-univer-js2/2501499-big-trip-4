@@ -111,7 +111,8 @@ const PointMode = {
 const UpdateType = {
   PATCH: 'patch',
   MINOR: 'MINOR',
-  MAJOR: 'MAJOR'
+  MAJOR: 'MAJOR',
+  INIT: 'INIT'
 };
 
 const UserAction = {
