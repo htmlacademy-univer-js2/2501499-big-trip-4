@@ -58,7 +58,7 @@ const Duration = {
 };
 
 const PointEmpty = {
-  basePrice: 0,
+  price: 0,
   dateFrom: null,
   dateTo: null,
   destination: null,
@@ -128,6 +128,19 @@ const EmptyListText = {
   [FilterTypes.PAST]: 'There are no past events'
 };
 
+const ButtonText = {
+  SAVE: 'Save',
+  DELETE: 'Delete',
+  CANCEL: 'Cancel',
+  LOAD_SAVE: 'Saving...',
+  LOAD_DELETE: 'Deleting...'
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000
+};
+
 export {
   Duration,
   CITIES,
@@ -148,5 +161,7 @@ export {
   PointMode,
   UpdateType,
   UserAction,
-  EmptyListText
+  EmptyListText,
+  ButtonText,
+  TimeLimit
 };

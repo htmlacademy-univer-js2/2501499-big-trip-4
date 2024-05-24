@@ -31,6 +31,7 @@ export default class NewPointPresenter {
       isCreating: true,
       onRollUpPointClick: this.#cancelClickHandler,
       onSubmitForm: this.#formSubmitHandler,
+      onCancelFormClick: this.#cancelClickHandler
     });
     render(this.#pointEditComponent, this.#container.element, RenderPosition.AFTERBEGIN);
     document.addEventListener('keydown', this.#escKeyDownHandler);
@@ -47,13 +48,30 @@ export default class NewPointPresenter {
     this.#onDestroy();
   }
 
+  setSaving() {
+    this.#pointEditComponent.updateElement({
+      isActive: false,
+      isSaving: true
+    });
+  }
+
+  setAborting() {
+    const resetFormState = () => {
+      this.#pointEditComponent.updateElement({
+        isActive: true,
+        isSaving: false,
+        isDeleting: false
+      });
+    };
+    this.#pointEditComponent.shake(resetFormState);
+  }
+
   #formSubmitHandler = (point) => {
     this.#onDataChange(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
-      {id: crypto.randomUUID(), ...point}
+      point
     );
-    this.destroy();
   };
 
   #cancelClickHandler = () => {
