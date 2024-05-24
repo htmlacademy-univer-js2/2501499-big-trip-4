@@ -59,7 +59,8 @@ export default class PointPresenter {
       replace(this.#pointComponent, previousPointComponent);
     }
     if (this.#mode === PointMode.EDIT) {
-      replace(this.#pointEditComponent, previousPointEditComponent);
+      replace(this.#pointComponent, previousPointEditComponent);
+      this.#mode = PointMode.DEFAULT;
     }
 
     remove(previousPointComponent);
@@ -78,6 +79,36 @@ export default class PointPresenter {
     remove(this.#pointEditComponent);
   }
 
+  setSaving() {
+    if (this.#mode === PointMode.EDIT) {
+      this.#pointEditComponent.updateElement({
+        isActive: false,
+        isSaving: true
+      });
+    }
+  }
+
+  setDeleting() {
+    this.#pointEditComponent.updateElement({
+      isActive: false,
+      isDeleting: true
+    });
+  }
+
+  setAborting() {
+    if (this.#mode === PointMode.EDIT) {
+      const resetFormState = () => {
+        this.#pointEditComponent.updateElement({
+          isActive: true,
+          isSaving: false,
+          isDeleting: false
+        });
+      };this.#pointEditComponent.shake(resetFormState);
+    } else {
+      this.#pointEditComponent.shake();
+    }
+  }
+
   #replacePointToForm = () => {
     replace(this.#pointEditComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#escKeyDownHandler);
@@ -92,7 +123,7 @@ export default class PointPresenter {
   };
 
   #escKeyDownHandler = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && this.#pointEditComponent.isActive) {
       event.preventDefault();
       this.#pointEditComponent.reset(this.#point);
       this.#replaceFormToPoint();
@@ -104,17 +135,24 @@ export default class PointPresenter {
   };
 
   #formRollUpClickHandler = () => {
-    this.#replaceFormToPoint();
+    if (this.#pointEditComponent.isActive) {
+      this.#pointEditComponent.reset(this.#point);
+      this.#replaceFormToPoint();
+    }
   };
 
   #formSubmitHandler = (updatePoint) => {
     const isMinor = isBigDifference(updatePoint, this.#point);
-    this.#onDataChange(
-      UserAction.UPDATE_POINT,
-      isMinor ? UpdateType.MINOR : UpdateType.PATCH,
-      updatePoint
-    );
-    this.#replaceFormToPoint();
+    if (isMinor) {
+      this.#onDataChange(
+        UserAction.UPDATE_POINT,
+        isMinor ? UpdateType.MINOR : UpdateType.PATCH,
+        updatePoint
+      );
+    }
+    if (this.#pointEditComponent.isActive) {
+      this.#replaceFormToPoint();
+    }
   };
 
   #cancelClickHandler = (event) => {
