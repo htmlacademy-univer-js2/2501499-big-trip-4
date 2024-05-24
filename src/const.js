@@ -81,6 +81,13 @@ const FilterOptions = {
   [FilterTypes.PAST]: (points) => points.filter((point) => isPointPast(point))
 };
 
+const FilterHasPoints = {
+  [FilterTypes.EVERYTHING]: () => true,
+  [FilterTypes.FUTURE]: (points) => points.some((point) => isPointFuture(point)),
+  [FilterTypes.PRESENT]: (points) => points.some((point) => isPointPresent(point)),
+  [FilterTypes.PAST]: (points) => points.some((point) => isPointPast(point))
+};
+
 const SortTypes = {
   DAY: 'day',
   EVENT: 'event',
@@ -155,6 +162,7 @@ export {
   POINT_COUNT,
   FilterTypes,
   FilterOptions,
+  FilterHasPoints,
   SortTypes,
   SortingOptions,
   ACTIVE_SORT_TYPES,
