@@ -135,10 +135,8 @@ export default class PointPresenter {
   };
 
   #formRollUpClickHandler = () => {
-    if (this.#pointEditComponent.isActive) {
-      this.#pointEditComponent.reset(this.#point);
-      this.#replaceFormToPoint();
-    }
+    this.#pointEditComponent.reset(this.#point);
+    this.#replaceFormToPoint();
   };
 
   #formSubmitHandler = (updatePoint) => {

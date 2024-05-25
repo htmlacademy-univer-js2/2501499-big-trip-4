@@ -13,7 +13,7 @@ const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const mainElement = document.querySelector('.page-main');
 const eventListElement = mainElement.querySelector('.trip-events');
 
-const AUTHORIZATION = 'Basic ahsjdhi838hekhu';
+const AUTHORIZATION = 'Basic kjfdshkjfks';
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const apiService = new PointsApiService(END_POINT, AUTHORIZATION);
@@ -49,6 +49,6 @@ function newPointClickHandler() {
 
 render(newPointComponent, tripInfoElement, RenderPosition.BEFOREEND);
 
-boardPresenter.init();
 filterPresenter.init();
+boardPresenter.init();
 pointsModel.init();
