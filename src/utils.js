@@ -99,7 +99,7 @@ function sortPointsByTime(firstPoint, secondPoint) {
 }
 
 function sortPointsByPrice(firstPoint, secondPoint) {
-  return secondPoint.basePrice - firstPoint.basePrice;
+  return secondPoint.price - firstPoint.price;
 }
 
 function sortPointsByEvent(firstPoint, secondPoint) {

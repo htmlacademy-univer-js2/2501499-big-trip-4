@@ -118,6 +118,9 @@ export default class BoardPresenter {
       onSortTypeChange: this.#sortTypeChangeHandler
     });
 
+    this.#clearTripInfo();
+    this.#renderTripinfo();
+
     render(this.#sortComponent, this.#container);
   };
 

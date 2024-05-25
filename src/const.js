@@ -1,31 +1,5 @@
 import { isPointFuture, isPointPast, isPointPresent, sortPointsByDay, sortPointsByEvent, sortPointsByOffers, sortPointsByPrice, sortPointsByTime } from './utils';
 
-const CITIES = [
-  'Chamonix',
-  'Geneva',
-  'Amsterdam',
-  'Helsinki',
-  'Oslo',
-  'Kopenhagen',
-  'Den Haag',
-  'Rotterdam',
-  'Saint Petersburg',
-  'Moscow',
-  'Sochi',
-  'Tokio',
-];
-
-const OFFERS = [
-  'Order Uber',
-  'Add luggage',
-  'Switch to comfort',
-  'Rent a car',
-  'Add breakfast',
-  'Book tickets',
-  'Lunch in city',
-  'Upgrade to a business class'
-];
-
 const TYPES = [
   'taxi',
   'bus',
@@ -40,16 +14,9 @@ const TYPES = [
 
 const DEFAULT_TYPE = 'flight';
 
-const DESCRIPTION = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra.';
-
 const OFFER_COUNT = Math.floor(Math.random() * 4 + 1);
 const DESTINATION_COUNT = 5;
 const POINT_COUNT = 5;
-
-const Price = {
-  MIN: 1,
-  MAX: 1000
-};
 
 const Duration = {
   HOUR: 5,
@@ -150,10 +117,6 @@ const TimeLimit = {
 
 export {
   Duration,
-  CITIES,
-  OFFERS,
-  DESCRIPTION,
-  Price,
   TYPES,
   DEFAULT_TYPE,
   PointEmpty,
