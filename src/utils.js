@@ -1,4 +1,4 @@
-import { Duration } from './const';
+import { Duration, SortTypes, SortingOptions } from './const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -99,7 +99,7 @@ function sortPointsByTime(firstPoint, secondPoint) {
 }
 
 function sortPointsByPrice(firstPoint, secondPoint) {
-  return secondPoint.basePrice - firstPoint.basePrice;
+  return secondPoint.price - firstPoint.price;
 }
 
 function sortPointsByEvent(firstPoint, secondPoint) {
@@ -148,6 +148,29 @@ function adaptToServer(point) {
   return adaptedPoint;
 }
 
+function getTripInfoTitle(points = [], destinations = []) {
+  const tripDestinations = SortingOptions[SortTypes.DAY]([...points])
+    .map((point) => destinations.find((destination) => destination.id === point.destination).name);
+  return tripDestinations.length <= 3 ? tripDestinations.join('&nbsp;&mdash;&nbsp;')
+    : `${tripDestinations.at(0)}&nbsp;&mdash;&nbsp;...&nbsp;&mdash;&nbsp;${tripDestinations.at(-1)}`;
+}
+
+function getTripInfoDuration(points = []) {
+  const sortedPoints = SortingOptions[SortTypes.DAY]([...points]);
+  return (sortedPoints.length > 0)
+    ? `${dayjs(sortedPoints.at(0).dateFrom).format('DD MMM')}&nbsp;&mdash;&nbsp;${dayjs(sortedPoints.at(-1).dateFrom).format('DD MMM')}`
+    : '';
+}
+
+function getTripOffersCost(offerIds = [], offers = []) {
+  return offerIds.reduce((cost, id) => cost + (offers.find((offer) => offer.id === id)?.price ?? 0), 0);
+}
+
+function getTripInfoCost(points = [], offers = []) {
+  return points.reduce((cost, point) =>
+    cost + point.price + getTripOffersCost(point.offers, offers.find((offer) => point.type === offer.type)?.offers), 0);
+}
+
 export {
   getRandomInteger,
   getRandomValue,
@@ -167,5 +190,8 @@ export {
   sortPointsByOffers,
   isBigDifference,
   adaptToClient,
-  adaptToServer
+  adaptToServer,
+  getTripInfoTitle,
+  getTripInfoDuration,
+  getTripInfoCost
 };

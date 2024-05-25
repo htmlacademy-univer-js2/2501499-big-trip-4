@@ -3,14 +3,15 @@ import EventListView from '../view/event-list-view';
 import { RenderPosition, remove, render } from '../framework/render';
 import EmptyListView from '../view/empty-list-view';
 import PointPresenter from './point-presenter';
-import { sortPointsByDay, sortPointsByPrice, sortPointsByTime } from '../utils';
-import { ACTIVE_SORT_TYPES, FilterOptions, FilterTypes, SortTypes, TimeLimit, UpdateType, UserAction } from '../const';
+import { ACTIVE_SORT_TYPES, FilterOptions, FilterTypes, SortTypes, SortingOptions, TimeLimit, UpdateType, UserAction } from '../const';
 import NewPointPresenter from './new-point-presenter';
 import UiBlocker from '../framework/ui-blocker/ui-blocker';
+import TripInfoPresenter from './trip-info-presenter';
 
 
 export default class BoardPresenter {
   #container = null;
+  #tripInfoContainer = null;
   #offersModel = null;
   #pointsModel = null;
   #destinationsModel = null;
@@ -20,6 +21,7 @@ export default class BoardPresenter {
 
   #pointPresenters = new Map();
   #newPointPresenter = null;
+  #tripInfoPresenter = null;
 
   #sortComponent = null;
   #emptyListComponent = null;
@@ -36,8 +38,9 @@ export default class BoardPresenter {
     upperLimit: TimeLimit.UPPER_LIMIT
   });
 
-  constructor({container, offersModel, pointsModel, destinationsModel, filtersModel, onNewPointDestroy}) {
+  constructor({container, tripInfoContainer, offersModel, pointsModel, destinationsModel, filtersModel, onNewPointDestroy}) {
     this.#container = container;
+    this.#tripInfoContainer = tripInfoContainer;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
@@ -60,18 +63,7 @@ export default class BoardPresenter {
     const points = this.#pointsModel.points;
     const filteredPoints = FilterOptions[this.#filterType](points);
 
-    switch (this.#currentSortType) {
-      case SortTypes.TIME:
-        filteredPoints.sort(sortPointsByTime);
-        break;
-      case SortTypes.PRICE:
-        filteredPoints.sort(sortPointsByPrice);
-        break;
-      default:
-        filteredPoints.sort(sortPointsByDay);
-        break;
-    }
-    return filteredPoints;
+    return SortingOptions[this.#currentSortType](filteredPoints);
   }
 
   init() {
@@ -99,6 +91,20 @@ export default class BoardPresenter {
     this.#renderPoints();
   }
 
+  #renderTripinfo = () => {
+    this.#tripInfoPresenter = new TripInfoPresenter({
+      container: this.#tripInfoContainer,
+      destinationsModel: this.#destinationsModel,
+      offersModel: this.#offersModel
+    });
+    const sortedPoints = SortingOptions[SortTypes.DAY](this.points);
+    this.#tripInfoPresenter.init(sortedPoints);
+  };
+
+  #clearTripInfo = () => {
+    this.#tripInfoPresenter.destroy();
+  };
+
   #renderSort = () => {
     const sortTypes = Object.values(SortTypes).map((sortType) => ({
       type: sortType,
@@ -111,6 +117,9 @@ export default class BoardPresenter {
       currentSortType: this.#currentSortType,
       onSortTypeChange: this.#sortTypeChangeHandler
     });
+
+    this.#clearTripInfo();
+    this.#renderTripinfo();
 
     render(this.#sortComponent, this.#container);
   };
@@ -217,6 +226,8 @@ export default class BoardPresenter {
         this.#renderTrip();
         break;
       case UpdateType.MINOR:
+        this.#clearTripInfo();
+        this.#renderTripinfo();
         this.#clearTrip();
         this.#renderTrip();
         break;
@@ -226,6 +237,7 @@ export default class BoardPresenter {
         }
         this.#isLoading = false;
         this.#clearTrip();
+        this.#renderTripinfo();
         this.#renderTrip();
         break;
     }

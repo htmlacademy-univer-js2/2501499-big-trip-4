@@ -1,4 +1,3 @@
-import TripInfoView from './view/trip-info-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import OffersModel from './models/offers-model.js';
 import PointsModel from './models/points-model.js';
@@ -25,6 +24,7 @@ const filtersModel = new FiltersModel();
 
 const boardPresenter = new BoardPresenter({
   container: eventListElement,
+  tripInfoContainer: tripInfoElement,
   offersModel,
   pointsModel,
   destinationsModel,
@@ -47,7 +47,6 @@ function newPointClickHandler() {
   newPointComponent.element.disabled = true;
 }
 
-render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 render(newPointComponent, tripInfoElement, RenderPosition.BEFOREEND);
 
 boardPresenter.init();
