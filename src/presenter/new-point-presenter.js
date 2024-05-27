@@ -33,7 +33,7 @@ export default class NewPointPresenter {
       onSubmitForm: this.#formSubmitHandler,
       onCancelFormClick: this.#cancelClickHandler
     });
-    render(this.#pointEditComponent, this.#container.element, RenderPosition.AFTERBEGIN);
+    render(this.#pointEditComponent, this.#container, RenderPosition.AFTERBEGIN);
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
 
