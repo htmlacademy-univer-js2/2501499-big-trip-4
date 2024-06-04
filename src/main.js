@@ -13,7 +13,7 @@ const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const mainElement = document.querySelector('.page-main');
 const eventListElement = mainElement.querySelector('.trip-events');
 
-const AUTHORIZATION = 'Basic kjfdshkjfks';
+const AUTHORIZATION = 'Basic aojaihqhdkh';
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const apiService = new PointsApiService(END_POINT, AUTHORIZATION);
@@ -29,7 +29,7 @@ const boardPresenter = new BoardPresenter({
   pointsModel,
   destinationsModel,
   filtersModel,
-  onNewPointDestroy: newPointFormCloseHandler
+  onNewPointDestroy: newPointFormCloseHandler,
 });
 
 const filterPresenter = new FilterPresenter({container: filterElement, pointsModel, filtersModel});

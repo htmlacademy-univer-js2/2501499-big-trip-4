@@ -17,8 +17,6 @@ export default class BoardPresenter {
   #destinationsModel = null;
   #filtersModel = null;
 
-  #points = [];
-
   #pointPresenters = new Map();
   #newPointPresenter = null;
   #tripInfoPresenter = null;
@@ -32,13 +30,14 @@ export default class BoardPresenter {
 
   #isLoading = true;
   #isLoadingError = false;
+  #isCreating = null;
 
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
     upperLimit: TimeLimit.UPPER_LIMIT
   });
 
-  constructor({container, tripInfoContainer, offersModel, pointsModel, destinationsModel, filtersModel, onNewPointDestroy}) {
+  constructor({container, tripInfoContainer, offersModel, pointsModel, destinationsModel, filtersModel}) {
     this.#container = container;
     this.#tripInfoContainer = tripInfoContainer;
     this.#offersModel = offersModel;
@@ -51,7 +50,7 @@ export default class BoardPresenter {
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#actionViewChangeHandler,
-      onDestroy: onNewPointDestroy
+      onDestroy: this.#newPointDestroyHandler
     });
 
     this.#pointsModel.addObserver(this.#modelEventHandler);
@@ -81,7 +80,7 @@ export default class BoardPresenter {
       return;
     }
 
-    if (this.points.length === 0) {
+    if (this.points.length === 0 && !this.#isCreating) {
       this.#renderEmptyListView();
       return;
     }
@@ -151,9 +150,11 @@ export default class BoardPresenter {
   };
 
   createPoint = () => {
+    this.#isCreating = true;
     this.#currentSortType = SortTypes.DAY;
     this.#filtersModel.set(UpdateType.MAJOR, FilterTypes.EVERYTHING);
     this.#newPointPresenter.init();
+    this.#isCreating = false;
   };
 
   #clearTrip = ({ resetSort = false } = {}) => {
@@ -240,6 +241,13 @@ export default class BoardPresenter {
         this.#renderTripinfo();
         this.#renderTrip();
         break;
+    }
+  };
+
+  #newPointDestroyHandler = () => {
+    this.#isCreating = false;
+    if (this.points.length === 0) {
+      this.#modelEventHandler(UpdateType.MINOR);
     }
   };
 }
