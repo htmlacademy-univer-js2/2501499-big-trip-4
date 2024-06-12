@@ -13,7 +13,7 @@ const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const mainElement = document.querySelector('.page-main');
 const eventListElement = mainElement.querySelector('.trip-events');
 
-const AUTHORIZATION = 'Basic aojaihqhdkh';
+const AUTHORIZATION = 'Basic ishkjoajoiio';
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const apiService = new PointsApiService(END_POINT, AUTHORIZATION);
@@ -22,6 +22,10 @@ const destinationsModel = new DestinationsModel(apiService);
 const pointsModel = new PointsModel({apiService, destinationsModel, offersModel});
 const filtersModel = new FiltersModel();
 
+const newPointComponent = new NewPointView({
+  onClick: newPointClickHandler
+});
+
 const boardPresenter = new BoardPresenter({
   container: eventListElement,
   tripInfoContainer: tripInfoElement,
@@ -29,18 +33,10 @@ const boardPresenter = new BoardPresenter({
   pointsModel,
   destinationsModel,
   filtersModel,
-  onNewPointDestroy: newPointFormCloseHandler,
+  newPointButtonComponent: newPointComponent
 });
 
 const filterPresenter = new FilterPresenter({container: filterElement, pointsModel, filtersModel});
-
-const newPointComponent = new NewPointView({
-  onClick: newPointClickHandler
-});
-
-function newPointFormCloseHandler() {
-  newPointComponent.element.disabled = false;
-}
 
 function newPointClickHandler() {
   boardPresenter.createPoint();

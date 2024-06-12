@@ -24,6 +24,7 @@ export default class BoardPresenter {
   #sortComponent = null;
   #emptyListComponent = null;
   #eventListComponent = new EventListView();
+  #newPointButtonComponent = null;
 
   #currentSortType = SortTypes.DAY;
   #filterType = FilterTypes.EVERYTHING;
@@ -37,13 +38,14 @@ export default class BoardPresenter {
     upperLimit: TimeLimit.UPPER_LIMIT
   });
 
-  constructor({container, tripInfoContainer, offersModel, pointsModel, destinationsModel, filtersModel}) {
+  constructor({container, tripInfoContainer, offersModel, pointsModel, destinationsModel, filtersModel, newPointButtonComponent}) {
     this.#container = container;
     this.#tripInfoContainer = tripInfoContainer;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
     this.#filtersModel = filtersModel;
+    this.#newPointButtonComponent = newPointButtonComponent;
 
     this.#newPointPresenter = new NewPointPresenter({
       container: this.#eventListComponent.element,
@@ -72,19 +74,26 @@ export default class BoardPresenter {
   #renderTrip() {
     if (this.#isLoading) {
       this.#renderEmptyListView({isLoading: true});
+      this.#newPointButtonComponent.element.disabled = true;
       return;
     }
 
     if (this.#isLoadingError) {
       this.#renderEmptyListView({isLoadingError: true});
+      this.#newPointButtonComponent.element.disabled = true;
       return;
     }
+
+    this.#newPointButtonComponent.element.disabled = false;
 
     if (this.points.length === 0 && !this.#isCreating) {
       this.#renderEmptyListView();
       return;
     }
 
+    if (this.points.length !== 0 && this.#tripInfoPresenter === null) {
+      this.#renderTripinfo();
+    }
     this.#renderSort();
     render(this.#eventListComponent, this.#container);
     this.#renderPoints();
@@ -101,7 +110,9 @@ export default class BoardPresenter {
   };
 
   #clearTripInfo = () => {
-    this.#tripInfoPresenter.destroy();
+    if (this.#tripInfoPresenter !== null) {
+      this.#tripInfoPresenter.destroy();
+    }
   };
 
   #renderSort = () => {
@@ -227,18 +238,15 @@ export default class BoardPresenter {
         this.#renderTrip();
         break;
       case UpdateType.MINOR:
-        this.#clearTripInfo();
-        this.#renderTripinfo();
         this.#clearTrip();
         this.#renderTrip();
+        this.#clearTripInfo();
+        this.#renderTripinfo();
         break;
       case UpdateType.INIT:
-        if (data.isError) {
-          this.#isLoadingError = data.isError;
-        }
+        this.#isLoadingError = data.isError;
         this.#isLoading = false;
         this.#clearTrip();
-        this.#renderTripinfo();
         this.#renderTrip();
         break;
     }
@@ -249,5 +257,7 @@ export default class BoardPresenter {
     if (this.points.length === 0) {
       this.#modelEventHandler(UpdateType.MINOR);
     }
+
+    this.#newPointButtonComponent.element.disabled = false;
   };
 }
