@@ -12,7 +12,6 @@ export default class OffersModel {
 
   async init() {
     this.#offers = await this.#apiService.offers;
-    return this.#offers;
   }
 
   getByType(type) {

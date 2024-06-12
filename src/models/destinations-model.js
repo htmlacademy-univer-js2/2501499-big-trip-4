@@ -12,7 +12,6 @@ export default class DestinationsModel {
 
   async init() {
     this.#destinations = await this.#apiService.destinations;
-    return this.#destinations;
   }
 
   getById(id) {
