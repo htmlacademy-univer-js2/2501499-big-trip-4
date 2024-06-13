@@ -11,7 +11,12 @@ export default class DestinationsModel {
   }
 
   async init() {
-    this.#destinations = await this.#apiService.destinations;
+    try {
+      this.#destinations = await this.#apiService.destinations;
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 
   getById(id) {

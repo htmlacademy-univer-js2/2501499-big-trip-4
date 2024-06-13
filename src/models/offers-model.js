@@ -11,7 +11,12 @@ export default class OffersModel {
   }
 
   async init() {
-    this.#offers = await this.#apiService.offers;
+    try {
+      this.#offers = await this.#apiService.offers;
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 
   getByType(type) {
